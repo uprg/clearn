@@ -158,7 +158,7 @@ In the main func case its kind of an hack, as it can take an integer.
 size_t main(void) {
     struct salves
     {
-        int age;
+        size_t age;
         char name[6];
         float salary;
     };
