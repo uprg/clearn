@@ -156,7 +156,7 @@ In the main func case its kind of an hack, as it can take an integer.
 */
 
 size_t main(void) {
-    struct salves
+    struct slaves
     {
         size_t age;
         char name[6];
@@ -164,7 +164,7 @@ size_t main(void) {
     };
 
 
-    struct salves *ptr = malloc(sizeof(struct salves));
+    struct slaves *ptr = malloc(sizeof(struct slaves));
 
     (*ptr).age = 35;
     snprintf((*ptr).name, sizeof((*ptr).name), "Steve");
