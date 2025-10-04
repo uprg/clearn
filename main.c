@@ -1,3 +1,6 @@
+/*
+ * afl-gcc, memcpy, elf file (some terms to remember)
+ * */
 // #include <stdio.h>
 
 // void main(void) {
