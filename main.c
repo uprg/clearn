@@ -85,10 +85,77 @@
 
 
 
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// int main(void) {
+//     struct salves
+//     {
+//         int age;
+//         char name[6];
+//         float salary;
+//     };
+
+
+//     struct salves *ptr = malloc(sizeof(struct salves));
+
+//     (*ptr).age = 35;
+//     snprintf((*ptr).name, sizeof((*ptr).name), "Steve");
+//     (*ptr).salary = 100.00;
+
+
+//     printf("Age: %d\n", ptr->age);
+//     printf("Name: %s\n", ptr->name);
+//     printf("Salary: %.2f\n", ptr->salary);
+
+
+//     ptr->age = 40;
+//     snprintf(ptr->name, sizeof(ptr->name), "Bill");
+//     ptr->salary = 1000.00;
+
+//     printf("Age: %d\n", ptr->age);
+//     printf("Name: %s\n", ptr->name);
+//     printf("Salary: %.2f\n", ptr->salary);
+
+//     free(ptr);
+    
+//     return 0;
+// }
+
+
+
+// #include <stdio.h>
+
+// int main() {
+//     int a = 1;
+//     int b = 2;
+//     char buffer[50];
+
+//     snprintf(buffer, sizeof(buffer), "{ \"a\": %d, \"b\": %d }", a, b); // just puts the json data into buffer, can cut of json data if buffer is small
+
+//     printf("%s\n", buffer);  // prints: { "a": 1, "b": 2 }
+
+//     return 0;
+// }
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void) {
+/*
+It can be int main(void) or size_t main(void) as int or size_t are just return types of the func.
+
+As size_t is an unsigned int datatype according to platform(x86 or x64).
+
+So it can be 4bytes in 32-bit or 8bytes in 64-bit.
+
+and stores size value in int, like 4 for 4 bytes and so on.
+
+In the main func case its kind of an hack, as it can take an integer.
+*/
+
+size_t main(void) {
     struct salves
     {
         int age;
