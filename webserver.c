@@ -9,6 +9,7 @@
 #include <arpa/inet.h> /* htons */
 #include <unistd.h> /* close */
 #include <stdlib.h> /* malloc */
+#include <string.h> // strstr
 
 int  main(){
   int sfd; /* file desc for scoket */
@@ -90,6 +91,9 @@ int  main(){
    
    /*
     * logic for getting json data and it's position  and parsing it
+    * */
+
+   /*
    char *line_break = strstr(buf, "{");
 
    size_t fromstart_substring_size = buf - line_break;
@@ -97,7 +101,7 @@ int  main(){
 
    size_t substring_size = whole_string - fromstart_substring_size;
 
-   char *json_data = malloc(substring_size)
+   char *json_data = malloc(substring_size);
    */
 
 
