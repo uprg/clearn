@@ -87,9 +87,18 @@ int  main(){
    * @0: zero means no flags
    * */
    recv_size = recv(csfd, buf, 1024 - 1, 0);
-   // char *line_break = strstr(buf, "{");
+   
+   /*
+    * logic for getting json data and it's position  and parsing it
+   char *line_break = strstr(buf, "{");
 
-   // size_t substring_size = buf - line_break;
+   size_t fromstart_substring_size = buf - line_break;
+   size_t whole_string = strlen(buf);
+
+   size_t substring_size = whole_string - fromstart_substring_size;
+
+   char *json_data = malloc(substring_size)
+   */
 
 
 
