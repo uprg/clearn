@@ -73,7 +73,8 @@ int  main(){
   csfd = accept(sfd, (struct sockaddr *)&client_addr, &client_addr_size);
 
   /* recv_size stores the size of message received */
-  int recv_size;
+  ssize_t recv_size;
+
 
   /* recv data from client
    * 
@@ -85,8 +86,20 @@ int  main(){
    *
    * @0: zero means no flags
    * */
-  recv_size = recv(csfd, buf, 1023, 0);
-  buf[recv_size] = '\0';
+   recv_size = recv(csfd, buf, 1024 - 1, 0);
+   // char *line_break = strstr(buf, "{");
+
+   // size_t substring_size = buf - line_break;
+
+
+
+   // char *substring_address = strstr(buf, "Content-Length:")
+
+   // int indexof_content_length_value = buf - (substring_address + 16)
+   
+   // int content_length = buf[indexof_content_length_value]
+
+   buf[recv_size] = '\0';
   
   /* print the buffer data got from client */
   printf("data from client: %s\n", buf);
