@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <arpa/inet.h> /* htons */
 #include <unistd.h> /* close */
+#include <stdlib.h> /* malloc */
 
 int  main(){
   int sfd; /* file desc for scoket */
@@ -57,7 +58,7 @@ int  main(){
   /* client structs and vars */
   struct sockaddr_in client_addr;
   socklen_t client_addr_size = sizeof(client_addr);
-  char buf[1024];
+  char *buf = malloc(1024);
   int csfd;
 
   /* accepting conn
