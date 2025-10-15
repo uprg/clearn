@@ -59,7 +59,7 @@ int  main(){
   /* client structs and vars */
   struct sockaddr_in client_addr;
   socklen_t client_addr_size = sizeof(client_addr);
-  char *buf = malloc(1024);
+  char *buf = malloc(4096);
   int csfd;
 
   /* accepting conn
@@ -87,7 +87,7 @@ int  main(){
    *
    * @0: zero means no flags
    * */
-   recv_size = recv(csfd, buf, 1024 - 1, 0);
+   recv_size = recv(csfd, buf, 4096 - 1, 0);
    
    /*
     * logic for getting json data and it's position  and parsing it
@@ -113,9 +113,22 @@ int  main(){
    // int content_length = buf[indexof_content_length_value]
 
    buf[recv_size] = '\0';
+
+   char *method_field = strtok(buf, "\r\n");
+   char *headers_field = method_field + strlen(method_field) + 2;
+   char *headers_end = strstr(headers_field, "\r\n\r\n");
+   *headers_end = '\0'; /* adds null terminate on first /r while searching /r/n/r/n*/
+   char *data_field = headers_end + 4;
+   // printf("%zu\n", strlen(headers_field));
+
+   printf("the method line: %s\n", method_field);
+   printf("the headers line: %s\n", headers_field);
+   printf("the headers end: %s\n", headers_end);
+   printf("the data line: %s\n", data_field);
+
   
   /* print the buffer data got from client */
-  printf("data from client: %s\n", buf);
+  send(csfd, data_field, strlen(data_field), 0);
 
   /* close client file desc */
   close(csfd);
