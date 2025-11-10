@@ -93,7 +93,7 @@ int wmain(void){
         if (client_sock == INVALID_SOCKET){
             printf("[WSA Event] Accepting connection on 0.0.0.0:8080 failed: %d\n", WSAGetLastError());
             closesocket(server_sock);
-            WSACleanup();
+            // WSACleanup();
             return 1;
         }
 
