@@ -121,6 +121,17 @@ int wmain(int argc, wchar_t *argv[]){
             buffer[bytes] = '\0';
             printf("[WSA Event] Data Recived: %s\n", buffer);
 
+
+            // for (int i = 0; i < bytes; i++){
+            //     if (buffer[i] >= 32 && buffer[i] <= 126 || buffer[i] == '\n' || buffer[i] == '\r' || buffer[i] == '\0'){
+            //         continue;
+            //     }
+            //     else{
+            //         printf("[WSA Event] Malformed request body\n");
+            //         return 1;
+            //     }
+            // }
+
             memset(buffer, 0, sizeof(buffer));
 
             char *response =
