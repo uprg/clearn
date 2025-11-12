@@ -29,9 +29,9 @@ NTDDI_VERSION:
 #include <WS2tcpip.h>
 
 /* 
- main(int argc, wchar_t *argv[]) 
+ main(int argc, wchar_t *argv[]) or void
  */
-int wmain(void){
+int wmain(int argc, wchar_t *argv[]){
 
     WSADATA wsad;
     SOCKET server_sock, client_sock;
@@ -42,6 +42,7 @@ int wmain(void){
     int buffer_batch_len = sizeof(buffer) - 1;
     int bytes = 0;
     int total_bytes = 0;
+    INT ip_check;
 
     if (WSAStartup(MAKEWORD(2,2), &wsad) != 0){
         printf("[WSA Event] WSAStartup failed\n");
@@ -64,7 +65,19 @@ int wmain(void){
 
     server_sock_struct.sin_family = AF_INET;
     server_sock_struct.sin_port = htons(8080);
-    inet_pton(AF_INET, "0.0.0.0", &server_sock_struct.sin_addr);
+
+
+    ip_check = inet_pton(AF_INET, "0.0.0.0", &server_sock_struct.sin_addr);
+
+    if (ip_check == 0){
+        printf("[WSA Event] The IP address is invalid\n");
+        return 1;
+    }
+
+    if (ip_check == -1){
+        printf("[WSA Event] Error occured while setting up IP info: %d\n", WSAGetLastError());
+        return 1;
+    }
     
     if (bind(server_sock, (struct sockaddr *)&server_sock_struct, sizeof(server_sock_struct)) == SOCKET_ERROR){
         printf("[WSA Event] Bind on ip 0.0.0.0 and port 8080 failed: %d\n", WSAGetLastError());
@@ -104,12 +117,28 @@ int wmain(void){
        
         bytes = recv(client_sock, buffer, buffer_batch_len, 0);
 
-        printf("%d", bytes);
+        if (bytes > 0){
+            buffer[bytes] = '\0';
+            printf("[WSA Event] Data Recived: %s\n", buffer);
 
-        buffer[bytes] = '\0';
-        printf("[WSA Event] Data Recived: %s\n", buffer);
-        memset(buffer, 0, sizeof(buffer));
-        closesocket(client_sock);
+            memset(buffer, 0, sizeof(buffer));
+
+            char *response =
+                "HTTP/1.1 200 OK\r\n"
+                "Content-Type: application/json\r\n"
+                "Server: processdump\r\n"
+                "\r\n"
+                "{\"message\": \"got it\"}";
+
+            send(client_sock, response, strlen(response), 0);
+            closesocket(client_sock);
+        }else if (bytes == 0){
+            printf("[WSA Event] Client closed connection gracefully\n");
+            closesocket(client_sock);
+        }else{
+            printf("[WSA Event] Error occured while fetching data: %d\n", WSAGetLastError());
+            closesocket(client_sock);
+        }
 
 
         // for (;;){
