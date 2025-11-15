@@ -24,9 +24,24 @@ NTDDI_VERSION:
 
 
 #include <stdio.h>
+#include <stddef.h>
 
-int cstrlen(char *ptr){
-    int count = 0;
+
+/**
+ * windows version:
+ * DWORD cstrlen(WCHAR *strptr){
+ *  DWORD count = 0;
+ *  while (*strptr != L'\0'){
+ *      strptr++;
+ *      count++;
+ *  }
+ *  
+ *  return count;
+ * }
+ */
+
+size_t cstrlen(char *ptr){
+    size_t count = 0;
     while (*ptr != '\0'){
         ptr++;
         count++;
@@ -38,6 +53,6 @@ int cstrlen(char *ptr){
 int wmain(int argc, wchar_t *argv[])
 {
     char ptr[] = "what";
-    printf("String length: %d", cstrlen(ptr));
+    printf("String length: %zu", cstrlen(ptr));
     return 0;
 }
