@@ -25,19 +25,21 @@ NTDDI_VERSION:
 
 #include <stdio.h>
 
-int cstrlen(char *ptr){
-    int count = 0;
-    while (*ptr != '\0'){
-        ptr++;
-        count++;
+void cstrcpy(char *desc, char *src){
+    while (*src != '\0'){
+        *desc = *src;
+        src++;
+        desc++;
     }
-    
-    return count;
+
+    *desc = '\0';
 }
 
 int wmain(int argc, wchar_t *argv[])
 {
-    char ptr[] = "what";
-    printf("String length: %d", cstrlen(ptr));
+    char src[] = "what";
+    char desc[5] = {0};
+    cstrcpy(desc, src);
+    printf("data: %s", desc);
     return 0;
 }
